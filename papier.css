@@ -1,0 +1,270 @@
+/* ----- En-tête et métadonnées techniques ----- */
+metadonnees
+{
+	display : block;
+    font-family: "Courier New", Courier, monospace;
+	opacity: 0.5;
+	border: thin solid green;
+	padding: 20px;
+	margin: 20px;
+}
+
+description_corpus:before{ 
+	display: block; 
+	content: "--- Description du corpus ---"; border : thin solid black;
+	padding: 10px;
+	text-align: center;
+	}
+	titre_principal_corpus:before{ content: "Titre principal : "; font-weight:bold;}
+	titre_principal_corpus{position:relative; display:block;}
+	sous_titre_corpus:before{content: "Sous-titre : ";  font-weight:bold;}
+	sous_titre_corpus{position:relative;display:block;}
+	proprietaire:before{content: "Propriétaire : "; font-weight:bold;}
+	proprietaire{position:relative; display:block;}
+
+programme_recherche:before{
+	display : block;
+	content: "--- Description du programme ---";
+	border : thin solid black;
+	padding : 10px;
+	text-align : center;
+	}
+	nom_programme:before{content: "Nom du programme : "; font-weight:bold;}
+	nom_programme{position:relative; display:block;}
+	financeur:before{content: "Financé par : "; font-weight:bold;}
+	financeur{position:relative; display:block;}
+	logiciel:before{content: "Logiciel : "; font-weight:bold;}
+	logiciel{position:relative; display:block;}
+	encodage:before{content: "Encodage : "; font-weight:bold;}
+	encodage{position:relative; display:block;}
+	
+caracteristiques_document:before{
+	display:block;
+	content:"--- Description du document ---";
+	border:thin solid black;
+	padding:10px;
+	text-align:center;
+	}
+	cote_fichier_numerique:before{content: "Fichier numérique : ";font-weight:bold;}
+	cote_fichier_numerique{position:relative; display:block;}
+	cote_volume:before{content: "Cote, volume : "; font-weight:bold;}
+	cote_volume{position:relative; display:block;}
+	cote_folio:before{content: "Cote folio : "; font-weight:bold;}
+		cote_folio_A:after{content: "(A), ";} 
+		cote_folio_C:after{content: "(C), ";}
+		cote_folio_BIC:after{content: "(BIC)";} 
+
+	description_materielle{display: block;}
+	description_materielle:before{content: "Description matérielle : ";font-weight:bold;}
+	    dimensions:before{content: "Dimensions : "; font-weight:bold;}
+	    dimensions{text-indent:25px; display:block; position:relative;}
+	    dimensions[a_verifier="OUI"]:after{content: " (à vérifier)";color:red;}
+	         largeur:before{content: "L ";}
+	         hauteur:before{content: " x H ";}
+	    aspect{text-indent:25px; display:block; position:relative;}
+	    aspect:before{content: "Aspect : "; font-weight:bold;}
+	 
+	    /* Étape 1 - prb : tout en gras */
+        verso{text-indent:25px; display:block; position:relative;}
+	    verso:before{font-weight:bold; display: block; content: "Au verso : " attr(type_verso) " ; voir l'image : " attr(image_liee) " ; voir la transcription : " attr(fichier_lie);}
+      	verso[a_verifier="OUI"]:after{content: " (à vérifier)";color:red;}
+      	
+        /* Étape 2 - trouver expression régulière ou équivalent pour valeur non nulle */
+        /* verso{text-indent:25px; display:block; position:relative;}
+        verso:before{font-weight:bold; display: block; content: "Au verso : " attr(type_verso) "" ;}
+        verso[image_liee="*"]:after{content: "" attr(image_liee) "" ;}
+        verso[fichier_lie="*"]:after{content: "" attr(fichier_lie) "" ;}*/
+	    
+	    /*voir l'image : " attr(image_liee) " ; voir la transcription : " attr(fichier_lie);}*/
+	    
+	    recto{text-indent:25px; display:block; position:relative;}
+	    recto:before{font-weight:bold; display: block; content: "Recto associé ; voir l'image : " attr(image_liee) " ; voir la transcription : " attr(fichier_lie);}
+      	recto[a_verifier="OUI"]:after{content: " (à vérifier)";color:red;}
+      	
+	scripteur:before{content: "Scripteur principal : "; font-weight:bold;}
+	scripteur{display: block;}
+	scripteur[forme_normalisee]:after{content: "(" attr(forme_normalisee) ")";}
+
+transcription:before{
+	display: block;
+	content: "--- Description de la transcription ---";
+	border: thin solid black;
+	padding: 10px;
+	text-align: center;}
+	item_transcription:before{display: block;content: " - " attr(modifications) " par " attr(nom_transcripteur) ", le " attr(date_transcription);}
+	type_transcription:before{display: block;content: " - Transcription " attr(type_transcription);}
+
+validation:before{
+    display: block;
+	content: "--- Étape de validation ---";
+	border: thin solid black;
+	padding: 10px;
+	text-align: center;}
+	fichier_corrige:before{display: block; content: "Fichier corrigé (correction finale) par " attr(nom_correcteur) ", le " attr(date_finalisation_correction);}
+	/*a_valider[valeur="NON"]:after{content: "Pas de correction finale";color:red;}*/
+	a_valider[valeur="OUI"]:after{content: "Papier complètement corrigé";color:green;}
+	fichier_valide:before{display: block; content: "Fichier validé (pour publication) par " attr(nom_validateur) ", le " attr(date_validation);}
+    /*a_publier[valeur="NON"]:after{content: "Aucune validation";color:red;}*/
+    a_publier[valeur="OUI"]:after{content: "Papier validé";color:green;}
+
+/* ----- Elements blocs de contenu ----- */
+
+corps_de_texte{display:block; border:thin solid blue; padding:20px; font-size:1.8em;}
+/*bloc_de_texte{display:block; padding:5px; margin:5px;}*/
+bloc_de_texte{position:relative; display:block;}
+
+titre{position:relative; display:block;}
+	titre[type="principal"]{font-size:2em;}
+	titre[type="sous-titre"]{font-size:1.5em;}
+	titre[type="intermediaire"]{font-size:1.2em;}
+	titre[type="autre"]{font-size:1.2em;}
+
+paragraphe{position:relative; display:block;}
+
+trait_horizontal{position:relative; display:block;}
+
+tableau{display:table;}
+tableau:before{content: " ";}
+tableau:after{content: " ";}
+ligne_de_tableau{display:table-row;}
+
+retour_a_la_ligne{position:relative; display:block; content:"";}
+
+ligne_prolongee{position:relative; display:block; content:"";}
+
+/*ligne_prolongee{position:relative; display:block; content:""; text-align:right; width:inherit;}*/
+
+espace_vertical{position:relative; display:block; margin-top: attr(taille,px); content:"";}
+
+liste{display:block;}
+liste_item{display:list-item;}
+
+annotation{position:relative; display:block; font-family: "Courier New", Courier, monospace; opacity: 0.5; font-size:70%;}
+
+
+/* ----- Elements inline de contenu ----- */
+exposant {vertical-align: super; font-size: 70%; line-height: 80%;}
+centrer {text-align: center; margin-top: 0px;}
+blanc{display: inline-block; content: " ";}
+barrer{background-color:#EFEFEF;}/* barrer : non géré graphiquement -couleur -outil -orientation */
+rature{text-decoration:line-through;}
+
+/*douteux:before{content:"<";color:red;}
+douteux:after{content:">";color:red;}*/
+douteux:before{content:"<";color:red;}
+douteux:after{content:"[?]>";color:red;}
+/*douteux{content: "[?]"}*/
+
+entoure{display:inline-block;}
+
+trait_horizontal{display:inline-block; position:relative; margin-top:10px; margin-bottom:10px; content:"";}
+
+/* ----- attributs ----- */
+
+/**[taille_marge_gauche]{margin-left : attr(taille_marge_gauche,px);}*/
+
+*[valeur_blanc="B_valeur_01"] {white-space:normal; width:50px;}
+*[valeur_blanc="B_valeur_02"] {white-space:normal; width:100px;}
+*[valeur_blanc="B_valeur_03"] {white-space:normal; width:150px;}
+*[valeur_blanc="B_valeur_04"] {white-space:normal; width:200px;}
+*[valeur_blanc="B_valeur_05"] {white-space:normal; width:250px;}
+*[valeur_blanc="B_valeur_06"] {white-space:normal; width:300px;}
+*[valeur_blanc="B_valeur_07"] {white-space:normal; width:350px;}
+*[valeur_blanc="B_valeur_08"] {white-space:normal; width:400px;}
+*[valeur_blanc="B_valeur_09"] {white-space:normal; width:450px;}
+*[valeur_blanc="B_valeur_10"] {white-space:normal; width:500px;}
+*[valeur_blanc="B_valeur_11"] {white-space:normal; width:550px;}
+*[valeur_blanc="B_valeur_12"] {white-space:normal; width:600px;}
+*[valeur_blanc="B_valeur_13"] {white-space:normal; width:650px;}
+*[valeur_blanc="B_valeur_14"] {white-space:normal; width:700px;}
+*[valeur_blanc="B_valeur_15"] {white-space:normal; width:750px;}
+*[valeur_blanc="B_valeur_16"] {white-space:normal; width:800px;}
+*[valeur_blanc="B_valeur_17"] {white-space:normal; width:850px;}
+*[valeur_blanc="B_valeur_18"] {white-space:normal; width:900px;}
+*[valeur_blanc="B_valeur_19"] {white-space:normal; width:950px;}
+*[valeur_blanc="B_valeur_20"] {white-space:normal; width:990px;}
+
+*[valeur_trait_horizontal="TH_valeur_01"] {border-bottom:solid; width:50px;}
+*[valeur_trait_horizontal="TH_valeur_02"] {border-bottom:solid; width:100px;}
+*[valeur_trait_horizontal="TH_valeur_03"] {border-bottom:solid; width:150px;}
+*[valeur_trait_horizontal="TH_valeur_04"] {border-bottom:solid; width:200px;}
+*[valeur_trait_horizontal="TH_valeur_05"] {border-bottom:solid; width:250px;}
+*[valeur_trait_horizontal="TH_valeur_06"] {border-bottom:solid; width:300px;}
+*[valeur_trait_horizontal="TH_valeur_07"] {border-bottom:solid; width:350px;}
+*[valeur_trait_horizontal="TH_valeur_08"] {border-bottom:solid; width:400px;}
+*[valeur_trait_horizontal="TH_valeur_09"] {border-bottom:solid; width:450px;}
+*[valeur_trait_horizontal="TH_valeur_10"] {border-bottom:solid; width:500px;}
+*[valeur_trait_horizontal="TH_valeur_11"] {border-bottom:solid; width:550px;}
+*[valeur_trait_horizontal="TH_valeur_12"] {border-bottom:solid; width:600px;}
+*[valeur_trait_horizontal="TH_valeur_13"] {border-bottom:solid; width:650px;}
+*[valeur_trait_horizontal="TH_valeur_14"] {border-bottom:solid; width:700px;}
+*[valeur_trait_horizontal="TH_valeur_15"] {border-bottom:solid; width:750px;}
+*[valeur_trait_horizontal="TH_valeur_16"] {border-bottom:solid; width:800px;}
+*[valeur_trait_horizontal="TH_valeur_17"] {border-bottom:solid; width:850px;}
+*[valeur_trait_horizontal="TH_valeur_18"] {border-bottom:solid; width:900px;}
+*[valeur_trait_horizontal="TH_valeur_19"] {border-bottom:solid; width:950px;}
+*[valeur_trait_horizontal="TH_valeur_20"] {border-bottom:solid; width:990px;}
+
+*[type_entoure="aucun"]{border:none;}
+*[type_entoure="droite"]{border-right: solid 3px;}
+*[type_entoure="gauche"]{border-left: solid 3px;}
+*[type_entoure="dessous"]{border-bottom: solid 3px;}
+*[type_entoure="dessus"]{border-top: solid 3px;}
+*[type_entoure="dessus_dessous"]{border-top: solid 3px; border-bottom: solid 3px;}
+*[type_entoure="gauche_droite"]{border-left: solid 3px; border-right: solid 3px;}
+*[type_entoure="droite_dessous"]{border-right: solid 3px; border-bottom: solid 3px;}
+*[type_entoure="droite_dessus"]{border-right: solid 3px; border-top: solid 3px;}
+*[type_entoure="gauche_dessous"]{border-left: solid 3px; border-bottom: solid 3px;}
+*[type_entoure="gauche_dessus"]{border-left: solid 3px; border-top: solid 3px;}
+*[type_entoure="droite_dessous_gauche"]{border-right: solid 3px; border-bottom: solid 3px; border-left: solid 3px;}
+*[type_entoure="droite_dessus_gauche"]{border-right: solid 3px; border-top: solid 3px; border-left: solid 3px;}
+*[type_entoure="dessus_droite_dessous"]{border-top: solid 3px; border-right: solid 3px; border-bottom: solid 3px;}
+*[type_entoure="dessus_gauche_dessous"]{border-top: solid 3px; border-left: solid 3px; border-bottom: solid 3px;}
+*[type_entoure="tous"]{border: solid 3px;}
+
+*[couleur_entoure="plume_noire"]{border-color: black;}
+*[couleur_entoure="plume_rouge"]{border-color: red;}
+*[couleur_entoure="crayon_gris"]{border-color: grey;}
+*[couleur_entoure="autre"]{border-color: orange;}
+
+*[outil="plume_noire"]{color: black;}
+*[outil="plume_rouge"]{color: red;}
+*[outil="crayon_gris"]{color: grey;}
+*[outil="autre"]{color: orange;}
+
+*[outil_trait_horizontal="plume_noire"]{color: black;}
+*[outil_trait_horizontal="plume_rouge"]{color: red;}
+*[outil_trait_horizontal="crayon_gris"]{color: grey;}
+*[outil_trait_horizontal="autre"]{color: orange;}
+
+*[outil_soulignement_premier="plume_noire"]{border-bottom: thick solid black;}
+*[outil_soulignement_premier="plume_rouge"]{border-bottom: thick solid red;}
+*[outil_soulignement_premier="crayon_gris"]{border-bottom: thick solid grey;}
+*[outil_soulignement_premier="autre"] {border-bottom: thick solid orange;}
+
+*[valeur_deuxieme_soulignement="S_valeur_02"]{border-bottom: solid 3px; border-spacing: 0px 6px;}
+*[valeur_soulignement_troisieme="S_valeur_03"]{border-bottom: solid 3px; border-spacing: 0px 8px;}
+*[valeur_soulignement_quatrieme="S_valeur_04"]{border-bottom: solid 3px; border-spacing: 0px 12px;}
+
+*[type_ajout_detache="ajout_droit"]{position:relative; display:block;  float:left; width:50%; background-color: #F0F8FF;}
+*[type_ajout_detache="ajout_gauche"]{position:relative; display:block;  float:right; width:50%; background-color: #FFFFE0;}
+
+*[type_ajout_insere="ajout_exposant"] {vertical-align: super; font-size: 70%; line-height: 80%;}
+*[type_ajout_insere="ajout_indice"] {vertical-align: sub; font-size: 70%; line-height: 80%;}
+
+*[liste_position_bloc="bandeau_gauche"] {text-align:left;}
+*[liste_position_bloc="bandeau_droit"] {text-align:right;}
+*[liste_position_bloc="bandeau_centre"] {text-align:center;}
+
+*[taille_texte]{font-size: attr(taille_texte,em);}
+
+/* ----- crochets ouvrants et fermants pour balises ----- */
+*:not(liste):not(papier):not(titre):not(bloc_de_texte):not(espace_vertical):not(entoure):not(marque):not(soulignement_premier):not(barrer):not(abreviation):not(ajout):not(liste_item):not(rature):not(trait_horizontal):not(retour_a_la_ligne):not(description_corpus):not(titre_corpus):not(programme_recherche):not(caracteristiques_document):not(cote_folio):not(transcription):not(item_transcription)
+{
+    content:"[";
+}
+*:not(liste):not(papier):not(titre):not(bloc_de_texte):not(espace_vertical):not(entoure):not(marque):not(soulignement_premier):not(barrer):not(abreviation):not(ajout):not(liste_item):not(rature):not(trait_horizontal):not(retour_a_la_ligne):not(description_corpus):not(titre_corpus):not(programme_recherche):not(caracteristiques_document):not(cote_folio):not(transcription):not(item_transcription):after
+{
+    content:"]";
+}
+

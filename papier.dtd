@@ -1,0 +1,689 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+
+    Grammaire de description
+
+    des Papiers préparatoires de Jules Michelet
+
+
+    Conçue par Paule Petitier et développée par Cécile et Baptiste Milot
+
+
+    Version 1 du 19 décembre 2014, Cécile et Baptiste Milot. 
+    
+    Version 2 du 23 octobre 2015, Cécile Milot.    
+
+    Version 3 corr. du 19 février 2016, Thomas Lebarbé & Cécile Brémon.
+    
+    (Version 3.1 : T. L. et C. B., 19/02/2016 ; v3.1.2, 29/04/2016 ; v3.1.3, 09/11/2016.
+    Version 3.2 : insertion d'un bloc de validation dans les métadonnées, C. B., 02/10/2017.
+    Version 3.3 : certitudes "possible" et "probable" remplacées par "faible" et "forte", C. B., 09/10/2017.
+    Version 3.4 : insertion d'un élément <recto> en parallèle de l'élément <verso> dans les métadonnées 
+    et suppression de l'attribut @url inutilisé des éléments à formes normalisées, C. B., 07/11/2017.)
+
+-->
+
+
+
+<!-- Entités -->
+
+<!ENTITY % contenu_de_paragraphe "(#PCDATA|paragraphe|titre|soulignement_premier|soulignement_deuxieme|soulignement_troisieme|soulignement_quatrieme|tableau|ligne_de_tableau|cellule_de_tableau|ajout_insere|ajout_detache|point_d_insertion_ajout_detache|annotation|retour_a_la_ligne|ligne_prolongee|espace_vertical|changement_outil|changement_main|changement_taille_texte|barrer|entoure|marque|trait_horizontal|blanc|abreviation|chiffre|date|illisible|liste|titre_liste|liste_item|nom_de_lieu|evenement|etat|nom_de_personne|citation|institution|rature|reference_bibliographique|reference_litteraire_artistique|temoignage|langue_etrangere|douteux|exposant|centrer)*">
+<!-- 
+- Introduction de l'élément <retour_a_la_ligne/> pour aller à la ligne ;
+- Disparition de l'élément <trait_vertical> -> remplacé par bordure ou entoure (espace entre bordure et texte, mesuré en pixels) ;
+- Remplacement de l'élément <ligne_vide> -> remplacé par <espace_vertical> (taille de l'espace vertical, mesurée en pixels) ; 
+- Remplacement de l'élément <institution_revolutionnaire> par <institution> ;
+- Introduction de l'élément <langue_etrangere>
+- Introduction de l'élément <douteux>
+-->
+
+<!ENTITY % type_entoure "(aucun|droite|gauche|dessous|dessus|dessus_dessous|gauche_droite|droite_dessous|droite_dessus|gauche_dessous|gauche_dessus|droite_dessous_gauche|droite_dessus_gauche|dessus_droite_dessous|dessus_gauche_dessous|tous)">
+<!-- Ajout de "dessus_dessous" et de "gauche_droite" -->
+
+<!ENTITY % type_ajout_insere "(ajout_exposant|ajout_indice|ajout_ligne_a_part)">
+
+<!ENTITY % type_ajout_detache "(ajout_gauche|ajout_droit)">
+
+<!ENTITY % type_titre "(principal|sous_titre|intermediaire|autre)">
+<!-- Élement <titre> et élément <bandeau> dissociés afin de pouvoir encoder le titre et le bandeau séparément -->
+
+<!ENTITY % valeur_blanc "(B_valeur_01|B_valeur_02|B_valeur_03|B_valeur_04|B_valeur_05|B_valeur_06|B_valeur_07|B_valeur_08|B_valeur_09|B_valeur_10|B_valeur_11|B_valeur_12|B_valeur_13|B_valeur_14|B_valeur_15|B_valeur_16|B_valeur_17|B_valeur_18|B_valeur_19|B_valeur_20)">
+
+<!ENTITY % valeur_trait_horizontal "(TH_valeur_01|TH_valeur_02|TH_valeur_03|TH_valeur_04|TH_valeur_05|TH_valeur_06|TH_valeur_07|TH_valeur_08|TH_valeur_09|TH_valeur_10|TH_valeur_11|TH_valeur_12|TH_valeur_13|TH_valeur_14|TH_valeur_15|TH_valeur_16|TH_valeur_17|TH_valeur_18|TH_valeur_19|TH_valeur_20)">
+
+<!ENTITY % valeur_soulignement_deuxieme "(S_valeur_02)">
+<!ENTITY % valeur_soulignement_troisieme "(S_valeur_03)">
+<!ENTITY % valeur_soulignement_quatrieme "(S_valeur_04)">
+
+<!ENTITY % liste_type_verso "(colle_ecrit|colle_vierge|libre_vierge|libre_ecrit|A_DETERMINER)">
+
+<!ENTITY % liste_type_recto "(colle_ecrit|colle_vierge|libre_vierge|libre_ecrit|A_DETERMINER)">
+
+<!ENTITY % liste_type_a_verifier "(OUI|NON)">
+
+<!ENTITY % liste_a_valider "(OUI|NON)">
+
+<!ENTITY % liste_a_publier "(OUI|NON)">
+
+<!ENTITY % liste_type_trait "(pointille|tirets|continu|double)">
+
+<!ENTITY % liste_outil "(crayon_gris|plume_noire|plume_rouge|autre)">
+<!-- Couleur et outil combinés : gérés ensuite en CSS -->
+
+<!ENTITY % liste_forme_trait "(accolade|crochet|courbe|droit|oblique)">
+<!-- le trait vertical devient une bordure de tableau ou un entouré partiel ; le trait horizontal est conservé ; la forme du trait peut faire l'objet d'une annotation-->
+
+<!ENTITY % liste_main "(autographe|allographe|autre)">
+
+<!--<!ENTITY % liste_relecture "(oui|non)">-->
+<!-- Elément relecture : soit le garder ainsi (pas par défaut), soit le supprimer : rouge de relecture à expliquer en introduction de l'édition électronique ? -->
+
+<!ENTITY % liste_certitude "(nulle|faible|forte|certain)">
+
+<!ENTITY % liste_orientation_traits "(oblique|horizontal|vertical|croix|autre)">
+<!-- Conserver l'orientation des traits ? -> ou plutôt les renseigner en annotation ? -->
+
+<!ENTITY  % liste_position_bandeau "(bandeau_gauche|bandeau_droit|bandeau_centre)" >
+
+<!--<!ENTITY % liste_position_ajout "(au-dessus|en-dessous|droite|gauche|entre|exposant)">-->
+
+
+<!--<!ENTITY % liste_type_forme "(rond|carre|autre)">-->
+
+
+<!ENTITY % liste_style_liste "(circle|disc|square|armenian|cjk-ideographic|decimal|decimal-leading-zero|georgian|hebrew|hiragana|hiragana-iroha|katakana|katagana-iroha|lower-alpha|lower-greek|lower-latin|lower-roman|upper-alpha|upper-latin|upper-roman)">
+
+
+<!ENTITY % ES_liste_annotation "(historique|linguistique|genetique|commentaire_transcription|commentaire_encodage)">
+
+
+<!ENTITY % ES_type_commentaire "(scientifique|encodage)">
+
+
+<!ENTITY % ES_liste_nom_de_personne "(auteur|personnage_historique|informateur_de_michelet|autre)">
+
+
+<!ENTITY % ES_liste_type_date "(historique|ecriture|autre)">
+
+
+<!ENTITY % ES_liste_institution "(parti|institution|autre)">
+
+
+<!ENTITY % ES_liste_nom_de_lieu "(lieu_ecriture_note|lieu_histoire|autre)">
+
+
+<!ENTITY % ES_liste_reference_bibliographique "(reference_ouvrage|reference_journal|numero_tome_page|localisation_source|autre)">
+
+
+<!ENTITY % ES_liste_reference_litteraire_artistique "(tableau|litterature|chanson|sculpture|autre)">
+
+
+<!ENTITY % ES_liste_temoignage "(oral|autre)">
+
+
+
+
+<!--  ELEMENTS -->
+
+<!-- Elément root -->
+
+<!ELEMENT papier (metadonnees, corps_de_texte)>	
+
+
+
+<!-- Eléments de métadonnées du fichier XML -->
+
+    <!ELEMENT metadonnees (description_corpus, programme_recherche, caracteristiques_document, transcription, validation*)>
+
+        <!ELEMENT description_corpus (titre_corpus, proprietaire)>
+
+            <!ELEMENT titre_corpus (titre_principal_corpus+, sous_titre_corpus*) >
+
+                <!ELEMENT titre_principal_corpus (#PCDATA) >
+
+                <!ELEMENT sous_titre_corpus (#PCDATA) >
+
+            <!ELEMENT proprietaire (#PCDATA) >
+
+            
+
+        <!ELEMENT programme_recherche (nom_programme+, financeur*, logiciel*, encodage*)>
+
+            <!ELEMENT nom_programme (#PCDATA) >
+
+            <!ELEMENT financeur (#PCDATA) >
+
+            <!ELEMENT logiciel (#PCDATA) >
+
+            <!ELEMENT encodage (#PCDATA) >
+
+
+
+        <!ELEMENT caracteristiques_document (cote_fichier_numerique, cote_volume, cote_folio, description_materielle, scripteur*) >
+
+            <!ELEMENT cote_fichier_numerique (#PCDATA) >
+
+            <!ELEMENT cote_volume (#PCDATA) >
+
+            <!ELEMENT cote_folio (cote_folio_A, cote_folio_C, cote_folio_BIC)>
+
+                <!ELEMENT cote_folio_A (#PCDATA) >
+
+                <!ELEMENT cote_folio_C (#PCDATA) >
+
+                <!ELEMENT cote_folio_BIC (#PCDATA) >
+
+            <!ELEMENT description_materielle (dimensions, aspect, (verso|recto))*>
+            
+                <!ELEMENT dimensions (largeur, hauteur)>
+
+                    <!ATTLIST dimensions a_verifier %liste_type_a_verifier; #IMPLIED>
+   
+                    <!ELEMENT largeur (#PCDATA) >
+                             
+                    <!ELEMENT hauteur (#PCDATA) >
+                
+                <!ELEMENT aspect (#PCDATA) >
+
+                <!ELEMENT verso EMPTY>
+
+            	   <!ATTLIST verso a_verifier %liste_type_a_verifier; #IMPLIED
+            	   
+            			  	 type_verso %liste_type_verso; #IMPLIED
+
+            			  	 fichier_lie CDATA #IMPLIED
+
+            			  	 image_liee CDATA #IMPLIED >    
+            			  	 
+             <!ELEMENT recto EMPTY>
+
+            	   <!ATTLIST recto a_verifier %liste_type_a_verifier; #IMPLIED
+            	   
+            			  	 type_recto %liste_type_recto; #IMPLIED
+
+            			  	 fichier_lie CDATA #IMPLIED
+
+            			  	 image_liee CDATA #IMPLIED >  
+
+            <!ELEMENT scripteur (#PCDATA) >
+
+                <!ATTLIST scripteur forme_normalisee CDATA #REQUIRED >
+
+         
+
+        <!ELEMENT transcription (item_transcription)*>
+
+        <!ELEMENT item_transcription EMPTY>
+
+        	<!ATTLIST item_transcription date_transcription CDATA "AAAA/MM/JJ"
+
+        								 nom_transcripteur CDATA #REQUIRED
+
+										 modifications (metadonnees|transcription_initiale|corrections) #REQUIRED>
+										 
+										 
+		<!ELEMENT validation (type_transcription|fichier_corrige|a_valider|fichier_valide|a_publier)*>
+		
+		<!ELEMENT type_transcription EMPTY>
+
+        	<!ATTLIST type_transcription type_transcription (linearisee|pseudo-diplomatique) #REQUIRED>
+        	
+
+        <!ELEMENT fichier_corrige EMPTY>
+
+        	<!ATTLIST fichier_corrige date_finalisation_correction CDATA "AAAA/MM/JJ"
+
+        								 nom_correcteur CDATA #REQUIRED>
+       
+        <!ELEMENT a_valider EMPTY>
+
+        	<!ATTLIST a_valider valeur %liste_a_valider; #IMPLIED>
+        	
+       
+        <!ELEMENT fichier_valide EMPTY>
+
+        	<!ATTLIST fichier_valide date_validation CDATA "AAAA/MM/JJ"
+
+        								 nom_validateur CDATA #REQUIRED>
+        	
+        	
+        <!ELEMENT a_publier EMPTY>
+
+        	<!ATTLIST a_publier valeur %liste_a_publier; #IMPLIED>
+			
+	
+	<!ELEMENT corps_de_texte (bloc_de_texte|bandeau)*>
+
+		<!ATTLIST corps_de_texte outil %liste_outil; "plume_noire"
+
+								 main %liste_main; #IMPLIED
+								 
+								 forme_trait %liste_forme_trait; #IMPLIED
+								 
+								 taille_texte CDATA "1"
+
+								 >
+		<!-- Par défaut, dans le corps de texte, l'outil utilisé est "plume_noire" et la main "autographe".-->
+
+	
+
+	<!ELEMENT bloc_de_texte (titre|paragraphe|tableau|trait_horizontal|espace_vertical|entoure|retour_a_la_ligne|point_d_insertion_ajout_detache|ajout_detache)*>
+	<!-- Bloc de texte : unité cohérente de rédaction -->
+		<!ATTLIST bloc_de_texte type_entoure %type_entoure; "aucun" 
+
+				                couleur_entoure %liste_outil; #IMPLIED
+
+				                type_trait %liste_type_trait; "continu"
+
+				                forme_trait %liste_forme_trait; #IMPLIED
+		                        
+		                        >
+		                        
+<!--    <!ELEMENT bandeau (#PCDATA|titre|paragraphe|tableau|trait_horizontal|espace_vertical|entoure|retour_a_la_ligne|point_d_insertion_ajout_detache|ajout_detache)*>
+	<!-\- Bloc de texte : unité cohérente de rédaction -\->
+		<!ATTLIST bandeau position %liste_position_bandeau; #REQUIRED
+		                        
+		                        type_entoure %type_entoure; "aucun" 
+
+				                couleur_entoure %liste_outil; #IMPLIED
+
+				                type_trait %liste_type_trait; "continu"
+
+				                forme_trait %liste_forme_trait; #IMPLIED
+		                        
+		                        >-->
+		                        
+		                        
+		<!ELEMENT bandeau %contenu_de_paragraphe;>
+	<!-- Bloc de texte : unité cohérente de rédaction -->
+		<!ATTLIST bandeau position %liste_position_bandeau; #REQUIRED
+		                        
+		                        type_entoure %type_entoure; "aucun" 
+
+				                couleur_entoure %liste_outil; #IMPLIED
+
+				                type_trait %liste_type_trait; "continu"
+
+				                forme_trait %liste_forme_trait; #IMPLIED
+		                        
+		                        >
+                       	
+                       	
+                       	
+  	   					
+    <!ELEMENT ajout_insere %contenu_de_paragraphe;>
+
+		<!ATTLIST ajout_insere type_ajout_insere %type_ajout_insere; #REQUIRED
+
+  	   					>    
+  	   					
+  	<!ELEMENT ajout_detache %contenu_de_paragraphe;>
+
+        <!ATTLIST ajout_detache type_ajout_detache %type_ajout_detache; #REQUIRED
+
+  	   					num_reference CDATA #REQUIRED
+  	   					
+  	   					type_entoure %type_entoure; "aucun" 
+  	   					
+  	   					couleur_entoure %liste_outil; #IMPLIED
+  	   					
+  	   					type_trait %liste_type_trait; "continu"
+  	   					
+  	   					forme_trait %liste_forme_trait; #IMPLIED
+  					
+  	   					>
+  	   
+  	<!ELEMENT point_d_insertion_ajout_detache EMPTY>
+
+		<!ATTLIST point_d_insertion_ajout_detache num_reference_ajout_detache CDATA #REQUIRED>
+  	   					
+	
+	<!ELEMENT titre %contenu_de_paragraphe;>
+
+		<!ATTLIST titre type %type_titre; #REQUIRED
+
+						>
+
+
+	<!ELEMENT paragraphe %contenu_de_paragraphe;>
+
+		<!ATTLIST paragraphe outil %liste_outil; #IMPLIED
+				             
+							 >
+							 
+     <!ELEMENT changement_outil %contenu_de_paragraphe;>
+
+		<!ATTLIST changement_outil outil %liste_outil; #REQUIRED
+		                      
+		                           >
+				 
+	<!ELEMENT changement_main %contenu_de_paragraphe;>
+
+		<!ATTLIST changement_main main %liste_main; #IMPLIED
+		
+		                          >
+							 
+	<!ELEMENT changement_taille_texte %contenu_de_paragraphe;>
+
+		<!ATTLIST changement_taille_texte taille_texte CDATA #REQUIRED
+		
+		                                  >
+
+							 						 
+    <!ELEMENT trait_horizontal %contenu_de_paragraphe;>
+
+		<!ATTLIST trait_horizontal valeur_trait_horizontal %valeur_trait_horizontal; #IMPLIED
+		
+		                     outil_trait_horizontal %liste_outil; #IMPLIED
+
+				             type_trait %liste_type_trait; "continu"
+
+				             forme_trait %liste_forme_trait; #IMPLIED
+				             
+							 >
+							 
+<!-- taille_marge_gauche CDATA #IMPLIED -->
+			  			 	 	
+
+	<!ELEMENT tableau (ligne_de_tableau)+>
+
+		<!ATTLIST tableau type_entoure %type_entoure; #IMPLIED
+
+						  couleur_entoure %liste_outil; #IMPLIED
+
+			              type_trait %liste_type_trait; "continu"
+			              
+			              forme_trait %liste_forme_trait; #IMPLIED
+
+						  >
+
+
+	<!ELEMENT ligne_de_tableau (cellule_de_tableau)+>
+
+		<!ATTLIST ligne_de_tableau outil %liste_outil; #IMPLIED
+		
+		                           type_entoure %type_entoure; #IMPLIED
+
+						           couleur_entoure %liste_outil; #IMPLIED
+
+					               type_trait %liste_type_trait; "continu"
+
+					               forme_trait %liste_forme_trait; #IMPLIED     							   
+
+								   >
+
+
+	<!ELEMENT cellule_de_tableau %contenu_de_paragraphe;>
+
+		<!ATTLIST cellule_de_tableau type_entoure %type_entoure; #IMPLIED
+
+	   							   couleur_entoure %liste_outil; #IMPLIED
+
+				             	   type_trait %liste_type_trait; "continu"
+
+				             	   forme_trait %liste_forme_trait; #IMPLIED
+
+  	 							   >
+ 
+
+	<!ELEMENT retour_a_la_ligne EMPTY>		
+	
+
+	<!ELEMENT ligne_prolongee %contenu_de_paragraphe; >
+	             	   
+
+	<!ELEMENT blanc EMPTY>	
+	
+	   <!ATTLIST blanc valeur_blanc %valeur_blanc; #IMPLIED >
+	
+
+	<!ELEMENT espace_vertical EMPTY>
+
+		<!ATTLIST espace_vertical taille CDATA #REQUIRED
+
+								  >
+
+
+	<!ELEMENT barrer %contenu_de_paragraphe;>
+
+		<!ATTLIST barrer epaisseur CDATA "1"
+
+  	   					 orientation %liste_orientation_traits; #IMPLIED
+  	   					 
+  	   					 type_trait %liste_type_trait; "continu"
+
+  	   					 outil_barrer %liste_outil; #IMPLIED
+
+  	 					 >
+  	 					 
+
+
+	<!ELEMENT entoure %contenu_de_paragraphe;>
+
+		<!ATTLIST entoure  type_entoure %type_entoure; #IMPLIED 
+
+				           couleur_entoure %liste_outil; #IMPLIED
+
+				           type_trait %liste_type_trait; "continu"
+				           
+				           forme_trait %liste_forme_trait; #IMPLIED
+
+  	 					   >
+  	 					   
+
+	<!ELEMENT langue_etrangere %contenu_de_paragraphe;>
+
+		<!ATTLIST langue_etrangere langue CDATA #IMPLIED 
+		
+		                   proposition_traduction CDATA #IMPLIED
+  	   					  
+  	 					   >
+<!-- Attribut "langue" : ajout CB -->  
+ 
+
+	<!ELEMENT illisible %contenu_de_paragraphe;>
+	
+			<!ATTLIST illisible proposition CDATA #IMPLIED
+  	   					  
+  	 					  >
+
+ 
+	<!-- <!ELEMENT douteux EMPTY> -->
+	<!ELEMENT douteux %contenu_de_paragraphe;>
+
+		<!ATTLIST douteux certitude %liste_certitude; #IMPLIED
+		
+		                  alternative CDATA #IMPLIED
+  	   					  
+  	 					  >
+
+                          <!--relecture %liste_relecture; #IMPLIED-->
+                
+                
+
+	<!ELEMENT marque %contenu_de_paragraphe;>
+
+    	<!ATTLIST marque outil %liste_outil; #IMPLIED
+
+  	   					 type CDATA #IMPLIED
+
+                         >  	   					  
+                        <!--relecture %liste_relecture; #IMPLIED-->
+				         	
+				         	
+    <!ELEMENT soulignement_premier %contenu_de_paragraphe;>
+
+		<!ATTLIST soulignement_premier outil_soulignement_premier %liste_outil; "plume_noire"
+  	   					 	
+				         	type_trait %liste_type_trait; "continu"
+
+				         	epaisseur_souligner CDATA "1"
+				         	
+				         	>		
+				         	
+				         	
+    <!ELEMENT soulignement_deuxieme %contenu_de_paragraphe;>
+
+		<!ATTLIST soulignement_deuxieme valeur_soulignement_deuxieme %valeur_soulignement_deuxieme; #IMPLIED
+		
+		                   type_entoure %type_entoure; "dessous" 
+
+				           couleur_entoure %liste_outil; "plume_noire"
+
+				           type_trait %liste_type_trait; "continu"
+
+  	 					   >
+				        
+				        
+    <!ELEMENT soulignement_troisieme %contenu_de_paragraphe;>
+
+		<!ATTLIST soulignement_troisieme valeur_soulignement_troisieme %valeur_soulignement_troisieme; #IMPLIED
+		
+		                   type_entoure %type_entoure; "dessous"
+
+				           couleur_entoure %liste_outil; "plume_noire"
+
+				           type_trait %liste_type_trait; "continu"
+
+  	 					   >
+  	 					   
+  	 					   
+<!ELEMENT soulignement_quatrieme %contenu_de_paragraphe;>
+
+		<!ATTLIST soulignement_quatrieme valeur_soulignement_quatrieme %valeur_soulignement_quatrieme; #IMPLIED
+		
+		                   type_entoure %type_entoure; "dessous"
+
+				           couleur_entoure %liste_outil; "plume_noire"
+
+				           type_trait %liste_type_trait; "continu"
+
+  	 					   >
+				         	
+				         	
+    <!ELEMENT exposant %contenu_de_paragraphe;>
+				         	
+
+    <!ELEMENT centrer %contenu_de_paragraphe;>
+
+    <!--  Élément centrer : ajout CB -->
+
+
+	<!ELEMENT abreviation %contenu_de_paragraphe;>
+
+		<!ATTLIST abreviation proposition CDATA #IMPLIED
+
+							  certitude %liste_certitude; #IMPLIED
+							  
+							  >
+							  <!--relecture %liste_relecture; #IMPLIED-->
+
+
+	
+  	   					
+  	
+  	<!ELEMENT annotation %contenu_de_paragraphe; >
+
+         <!ATTLIST annotation annotateur CDATA #IMPLIED
+
+    					 type %ES_liste_annotation; #IMPLIED
+
+						 certitude %liste_certitude; #IMPLIED>
+
+
+	<!ELEMENT liste (liste_item+)>
+    
+
+	<!ELEMENT liste_item %contenu_de_paragraphe;>
+
+
+
+	<!-- L'attribut "denominateur_commun" a été remplacé par "titre_liste". -->
+
+	<!ELEMENT titre_liste %contenu_de_paragraphe;>
+
+
+
+	<!ELEMENT rature %contenu_de_paragraphe;>
+
+		<!ATTLIST rature type_trait_rature %liste_type_trait; #IMPLIED
+
+  	   					outil_trait_rature %liste_outil; #IMPLIED
+
+  	   					epaisseur CDATA "1"
+
+						proposition CDATA #IMPLIED
+
+						certitude %liste_certitude; #IMPLIED
+
+  	 					>
+  	 					<!--relecture %liste_relecture; #IMPLIED-->
+
+ 
+ <!-- ÉLÉMENTS SÉMANTIQUES -->
+ 
+<!ELEMENT chiffre %contenu_de_paragraphe; >
+
+
+<!ELEMENT date %contenu_de_paragraphe; >
+
+    <!ATTLIST date forme_normalisee CDATA "AAAA/MM/JJ"
+
+				   type_date %ES_liste_type_date; #IMPLIED >
+
+
+ <!ELEMENT evenement %contenu_de_paragraphe; >
+
+    <!ATTLIST evenement   forme_normalisee_simplifiee CDATA #IMPLIED>
+						  
+
+<!ELEMENT nom_de_lieu %contenu_de_paragraphe; >
+
+    <!ATTLIST nom_de_lieu type %ES_liste_nom_de_lieu; #IMPLIED
+						  
+						  forme_normalisee_simplifiee CDATA #IMPLIED>
+						  
+
+<!ELEMENT etat %contenu_de_paragraphe; >
+
+    <!ATTLIST etat        forme_normalisee_simplifiee CDATA #IMPLIED>
+    
+
+<!ELEMENT nom_de_personne %contenu_de_paragraphe; >
+
+    <!ATTLIST nom_de_personne type %ES_liste_nom_de_personne; #IMPLIED
+
+							  forme_normalisee_simplifiee CDATA #IMPLIED>
+
+
+<!ELEMENT citation %contenu_de_paragraphe;>
+
+
+<!ELEMENT reference_bibliographique %contenu_de_paragraphe;>
+
+	<!ATTLIST reference_bibliographique type %ES_liste_reference_bibliographique; #IMPLIED
+
+    									forme_normalisee_simplifiee CDATA #IMPLIED>
+
+
+
+<!ELEMENT institution %contenu_de_paragraphe;>
+
+    <!ATTLIST institution type %ES_liste_institution; #IMPLIED
+
+						  forme_normalisee_simplifiee CDATA #IMPLIED>
+
+        
+
+<!ELEMENT reference_litteraire_artistique %contenu_de_paragraphe;>
+
+    <!ATTLIST reference_litteraire_artistique type %ES_liste_reference_litteraire_artistique; #IMPLIED 
+
+    										  forme_normalisee_simplifiee CDATA #IMPLIED>
+
+    
+
+<!ELEMENT temoignage %contenu_de_paragraphe;>
+
+    <!ATTLIST temoignage type %ES_liste_temoignage; #IMPLIED>
