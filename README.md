@@ -1,6 +1,6 @@
 # LAFABREV
 
-La Fabrique de la Révolution (LAFABREV) <br>
+La Fabrique de la Révolution <br>
 
 Centre D’Etude et de Recherche Interdisciplinaire de L’UFR LAC (CERILAC) <br>
 (EA 4410) Université Paris Diderot <br>
