@@ -6,7 +6,8 @@ Centre D’Etude et de Recherche Interdisciplinaire de L’UFR LAC (CERILAC) <br
 (EA 4410) Université Paris Diderot <br>
 Site : http://thomas-lallier.fr/axmaleo/web/ <br>
 Responsable : Paule Petitier <br>
-Contact : Cécile Brémon <br>
+Contact : Cécile Brémon <br><br>
+
 Présentation du projet <br>
 
 Le projet vise à constituer un corpus numérique autour de l’Histoire de la Révolution française de Jules Michelet.<br>
