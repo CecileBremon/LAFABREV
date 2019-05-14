@@ -22,7 +22,8 @@
     Version 3.4 : insertion d'un élément <recto> en parallèle de l'élément <verso> dans les métadonnées 
     et suppression de l'attribut @url inutilisé des éléments à formes normalisées, C. B., 07/11/2017.
     Version 3.5 : insertion d'un élément <italique> pour encoder les termes en italique présents dans les épreuves d'imprimerie, C. B., 15/01/2019.
-    Version 3.6 : insertion d'un élément <intervalle> avec attributs date_debut et date_fin, 13/05/2019.)
+    Version 3.6 : insertion d'un élément <intervalle> avec attributs date_debut et date_fin, C. B., 13/05/2019.
+    Version 3.7 : insertion d'un élément <entoure_plusieurs_lignes>, C. B., 14/05/2019.)
 
 -->
 
@@ -30,7 +31,7 @@
 
 <!-- Entités -->
 
-<!ENTITY % contenu_de_paragraphe "(#PCDATA|paragraphe|titre|soulignement_premier|soulignement_deuxieme|soulignement_troisieme|soulignement_quatrieme|tableau|ligne_de_tableau|cellule_de_tableau|ajout_insere|ajout_detache|point_d_insertion_ajout_detache|annotation|retour_a_la_ligne|ligne_prolongee|espace_vertical|changement_outil|changement_main|changement_taille_texte|barrer|entoure|marque|trait_horizontal|blanc|abreviation|chiffre|date|intervalle|illisible|liste|titre_liste|liste_item|nom_de_lieu|evenement|etat|nom_de_personne|citation|institution|rature|reference_bibliographique|reference_litteraire_artistique|temoignage|langue_etrangere|douteux|exposant|italique|centrer)*">
+<!ENTITY % contenu_de_paragraphe "(#PCDATA|paragraphe|titre|soulignement_premier|soulignement_deuxieme|soulignement_troisieme|soulignement_quatrieme|tableau|ligne_de_tableau|cellule_de_tableau|ajout_insere|ajout_detache|point_d_insertion_ajout_detache|annotation|retour_a_la_ligne|ligne_prolongee|espace_vertical|changement_outil|changement_main|changement_taille_texte|barrer|entoure|entoure_plusieurs_lignes|marque|trait_horizontal|blanc|abreviation|chiffre|date|intervalle|illisible|liste|titre_liste|liste_item|nom_de_lieu|evenement|etat|nom_de_personne|citation|institution|rature|reference_bibliographique|reference_litteraire_artistique|temoignage|langue_etrangere|douteux|exposant|italique|centrer)*">
 <!-- 
 - Introduction de l'élément <retour_a_la_ligne/> pour aller à la ligne ;
 - Disparition de l'élément <trait_vertical> -> remplacé par bordure ou entoure (espace entre bordure et texte, mesuré en pixels) ;
@@ -270,7 +271,7 @@
 
 	
 
-	<!ELEMENT bloc_de_texte (titre|paragraphe|tableau|trait_horizontal|espace_vertical|entoure|retour_a_la_ligne|point_d_insertion_ajout_detache|ajout_detache)*>
+	<!ELEMENT bloc_de_texte (titre|paragraphe|tableau|trait_horizontal|espace_vertical|entoure|entoure_plusieurs_lignes|retour_a_la_ligne|point_d_insertion_ajout_detache|ajout_detache)*>
 	<!-- Bloc de texte : unité cohérente de rédaction -->
 		<!ATTLIST bloc_de_texte type_entoure %type_entoure; "aucun" 
 
@@ -282,7 +283,7 @@
 		                        
 		                        >
 		                        
-<!--    <!ELEMENT bandeau (#PCDATA|titre|paragraphe|tableau|trait_horizontal|espace_vertical|entoure|retour_a_la_ligne|point_d_insertion_ajout_detache|ajout_detache)*>
+<!--    <!ELEMENT bandeau (#PCDATA|titre|paragraphe|tableau|trait_horizontal|espace_vertical|entoure|entoure_plusieurs_lignes|retour_a_la_ligne|point_d_insertion_ajout_detache|ajout_detache)*>
 	<!-\- Bloc de texte : unité cohérente de rédaction -\->
 		<!ATTLIST bandeau position %liste_position_bandeau; #REQUIRED
 		                        
@@ -464,6 +465,21 @@
 	<!ELEMENT entoure %contenu_de_paragraphe;>
 
 		<!ATTLIST entoure  type_entoure %type_entoure; #IMPLIED 
+
+				           couleur_entoure %liste_outil; #IMPLIED
+
+				           type_trait %liste_type_trait; "continu"
+				           
+				           forme_trait %liste_forme_trait; #IMPLIED
+
+  	 					   >
+
+
+  <!-- Élément entoure_plusieurs_lignes : ajout CB 14/05/2019 -->
+
+	<!ELEMENT entoure_plusieurs_lignes %contenu_de_paragraphe;>
+
+		<!ATTLIST entoure_plusieurs_lignes  type_entoure %type_entoure; #IMPLIED 
 
 				           couleur_entoure %liste_outil; #IMPLIED
 
