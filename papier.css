@@ -145,6 +145,7 @@ liste_item{display:list-item;}
 
 annotation{position:relative; display:block; font-family: "Courier New", Courier, monospace; opacity: 0.9; font-size:95%;}
 
+entoure_plusieurs_lignes{display:block;}
 
 
 /* ----- Elements inline de contenu ----- */
