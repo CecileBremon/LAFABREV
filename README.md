@@ -18,5 +18,5 @@ Fonds concernés : Les sources du corpus LAFABREV concernent les notes préparat
 
 
     
-Nous mettons à disposition les fichiers DTD (v 3.6) et CSS (correspondant) utilisés pour l'encodage des papiers manuscrits de Jules Michelet.
+Nous mettons à disposition les fichiers DTD (v 3.7) et CSS (correspondant) utilisés pour l'encodage des papiers manuscrits de Jules Michelet.
 
